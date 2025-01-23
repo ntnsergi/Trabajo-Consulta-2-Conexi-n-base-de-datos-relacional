@@ -143,3 +143,13 @@ object ConexionMySQL {
 }
 
 ```
+Se utiliza el archivo application.conf dentro de *src* en la carpera *resource* se coloca el file con lo siguiente: 
+mysqlDB = {
+    url = "jdbc:mysql://localhost:3306/pruebaDB"
+    driver = "com.mysql.cj.jdbc.Driver"
+    user = "root"
+    password = "(contraseña de la base de datos)"
+    connectionPool = "HikariCP"
+}
+### Desde Scala realice la consulta de todos los datos de la tabla de prueba. 
+![image](https://github.com/user-attachments/assets/211b8de9-7eb5-4c3c-b0ee-435d64c39325)
