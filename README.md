@@ -83,6 +83,7 @@ INSERT INTO Pedidos (ID_Pedido, ID_Cliente, Producto, Cantidad, Fecha) VALUES
 (4, 4, 'Laptop', 1, '2024-04-25'),
 (5, 1, 'Tablet', 2, '2024-05-18'),
 (6, 3, 'Smartphone', 5, '2024-06-20');
+// esta base de datos se obtuvo de un examen de la clase de fundamentos de base de datos 
 ```
 ### Desde Scala establezca la conexión a la base datos.
 Primeramente se realizan las importaciones para la conexion de la base de datos. 
