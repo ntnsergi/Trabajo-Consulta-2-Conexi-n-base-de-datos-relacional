@@ -87,4 +87,58 @@ INSERT INTO Pedidos (ID_Pedido, ID_Cliente, Producto, Cantidad, Fecha) VALUES
 ### Desde Scala establezca la conexión a la base datos.
 Primeramente se realizan las importaciones para la conexion de la base de datos. 
 ![image](https://github.com/user-attachments/assets/a22b47fb-25a4-4e40-8a59-363f619e1fe3)
+#### Codigo en Scala 
+```scala
+package conSQL
 
+import slick.jdbc.MySQLProfile.api._
+
+import scala.concurrent.Await
+import scala.concurrent.duration._
+
+object ConexionMySQL {
+
+  // Configuración de la base de datos
+  val db = Database.forConfig("mysqlDB")
+
+  // Esquema de las tablas
+  class Clientes(tag: Tag) extends Table[(Int, String, String)](tag, "Clientes") {
+    def id = column[Int]("ID_Cliente", O.PrimaryKey)
+    def nombre = column[String]("Nombre")
+    def ciudad = column[String]("Ciudad")
+
+    def * = (id, nombre, ciudad)
+  }
+
+  class Ventas(tag: Tag) extends Table[(Int, String, Int, BigDecimal, String, Int)](tag, "Ventas") {
+    def id = column[Int]("ID_Venta", O.PrimaryKey)
+    def producto = column[String]("Producto")
+    def cantidad = column[Int]("Cantidad")
+    def precioUnitario = column[BigDecimal]("Precio_Unitario")
+    def fecha = column[String]("Fecha")
+    def idCliente = column[Int]("ID_Cliente")
+
+    def * = (id, producto, cantidad, precioUnitario, fecha, idCliente)
+  }
+
+  val clientes = TableQuery[Clientes]
+  val ventas = TableQuery[Ventas]
+
+  def main(args: Array[String]): Unit = {
+    try {
+      // Consulta: Obtener todos los clientes
+      val query = clientes.result
+      val resultado = Await.result(db.run(query), 10.seconds)
+
+      println("Lista de clientes:")
+      resultado.foreach { case (id, nombre, ciudad) =>
+        println(s"ID: $id, Nombre: $nombre, Ciudad: $ciudad")
+      }
+
+    } finally {
+      db.close()
+    }
+  }
+}
+
+```
